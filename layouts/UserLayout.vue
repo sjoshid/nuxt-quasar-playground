@@ -8,14 +8,14 @@
             <div class="q-pa-xs">
               <q-btn-dropdown color="green" label="Metrics">
                 <q-list>
-                  <q-item v-close-popup clickable>
+                  <q-item v-close-popup clickable to="/">
                     <q-item-section>
-                      <NuxtLink to="/">Hotspot</NuxtLink>
+                      <q-item-label>Hotspot</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item v-close-popup clickable>
+                  <q-item v-close-popup clickable to="/metrics">
                     <q-item-section>
-                      <NuxtLink to="/metrics">Performance</NuxtLink>
+                      <q-item-label>Performance</q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -25,9 +25,9 @@
             <div class="q-pa-xs">
               <q-btn-dropdown color="green" label="Inventory">
                 <q-list>
-                  <q-item v-close-popup clickable>
+                  <q-item v-close-popup clickable to="/inventory">
                     <q-item-section>
-                      <NuxtLink to="/inventory">Inventory</NuxtLink>
+                      <q-item-label>Inventory</q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
