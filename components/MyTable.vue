@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { tableCols, tableData } from '../stores/dummy-store';
+import { tableCols, tableData } from '~/stores/dummy-store';
 const emit = defineEmits(['rowClickEvent']);
 
 const props = defineProps({

@@ -10,12 +10,12 @@
                 <q-list>
                   <q-item v-close-popup clickable>
                     <q-item-section>
-                      <q-item-label>Hotspot</q-item-label>
+                      <NuxtLink to="/">Hotspot</NuxtLink>
                     </q-item-section>
                   </q-item>
                   <q-item v-close-popup clickable>
                     <q-item-section>
-                      <q-item-label>Performance</q-item-label>
+                      <NuxtLink to="/metrics">Performance</NuxtLink>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -27,7 +27,7 @@
                 <q-list>
                   <q-item v-close-popup clickable>
                     <q-item-section>
-                      <q-item-label>Connection Inventory</q-item-label>
+                      <NuxtLink to="/inventory">Inventory</NuxtLink>
                     </q-item-section>
                   </q-item>
                 </q-list>
