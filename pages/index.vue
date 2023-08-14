@@ -1,11 +1,7 @@
 <template>
-  <NuxtLayout :name="userLayout">
+  <NuxtLayout name="user-layout">
     <q-item>
       <q-item-label>Hotspot page</q-item-label>
     </q-item>
   </NuxtLayout>
 </template>
-
-<script setup lang="ts">
-const userLayout = "user-layout"
-</script>

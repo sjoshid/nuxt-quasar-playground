@@ -61,7 +61,8 @@
           <q-toolbar class="col-4">
             <q-space></q-space>
             <q-tabs indicator-color="green" shrink stretch>
-              <q-tab icon="home" label="Home" name="tab2"/>
+              <q-route-tab icon="home" label="Home" name="tab2"
+                           href="/"/>
             </q-tabs>
           </q-toolbar>
         </div>

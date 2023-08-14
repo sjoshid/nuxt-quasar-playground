@@ -1,9 +1,5 @@
 <template>
-  <NuxtLayout :name="userLayout">
+  <NuxtLayout name="user-layout">
     <TimeSeriesComponent/>
   </NuxtLayout>
 </template>
-
-<script setup lang="ts">
-const userLayout = "user-layout"
-</script>

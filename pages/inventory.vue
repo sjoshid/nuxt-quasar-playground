@@ -1,7 +1,7 @@
 <template>
-  <NuxtLayout :name="userLayout">
+  <NuxtLayout name="user-layout">
     <div class="q-pa-md q-gutter-md">
-      <MyTable
+      <OTable
           :showUpdateCol="false"
           :showDeleteCol="false"
           title="BBS Inventory"
@@ -9,7 +9,7 @@
           :chooseVisibleCols="true"
           :fullScreenMode="true"
       />
-      <MyTable
+      <OTable
           :showUpdateCol="false"
           :showDeleteCol="false"
           title="Router Inventory"
@@ -17,7 +17,7 @@
           :chooseVisibleCols="true"
           :fullScreenMode="true"
       />
-      <MyTable
+      <OTable
           :showUpdateCol="false"
           :showDeleteCol="false"
           title="Interface Inventory"
@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-const userLayout = "user-layout"
-
 const bbsRowClickListener = () => {
   console.log('bbsRowClickListener called.');
 };

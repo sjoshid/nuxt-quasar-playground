@@ -51,10 +51,11 @@
           <q-toolbar class="col-4">
             <q-space></q-space>
             <q-tabs indicator-color="green" shrink stretch>
-              <q-tab
+              <q-route-tab
                   icon="admin_panel_settings"
                   label="Admin"
                   name="tab2"
+                  href="/admin/user-mgmt"
               />
             </q-tabs>
           </q-toolbar>
