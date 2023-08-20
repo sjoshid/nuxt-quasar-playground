@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Oculus" type="NodeJSConfigurationType" node-parameters=".output/server/index.mjs " working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>
