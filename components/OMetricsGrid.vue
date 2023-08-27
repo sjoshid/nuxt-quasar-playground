@@ -1,6 +1,6 @@
 <template>
 		<div class="q-pa-md">
-				<h3> Showing {{ serviceName }} </h3>
+				<h5> Showing {{ serviceName }} </h5>
 				<div :class="{'grid-stack': true, 'y-grid-stack': true}">
 						<OMetric v-for="(widget, index) in widgets" :key="index" v-bind="{ widget }"/>
 				</div>
