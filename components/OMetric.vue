@@ -4,13 +4,14 @@ const highcharts = useNuxtApp().vueApp.component('highcharts')
 
 defineProps<{ widget: GridStackWidget }>()
 const chartOptions = ref({
-		title: "Sujit title",
+		title: {
+				text: 'Sujit Joshi'
+		},
 		series: [
 				{
 						data: [1, 0, 3],
 				}
-		],
-
+		]
 });
 </script>
 
