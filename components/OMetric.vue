@@ -1,34 +1,24 @@
 <script lang="ts" setup>
-import {GridStackWidget} from "gridstack/dist/types";
+import {LocalDateTime} from "@js-joda/core";
+import {computed} from "@vue/reactivity";
+
+const {chartOptions, startTimestamp, endTimestamp} = defineProps<{
+		chartOptions: object,
+		startTimestamp: LocalDateTime,
+		endTimestamp: LocalDateTime,
+}>()
+
 const highcharts = useNuxtApp().vueApp.component('highcharts')
 
-defineProps<{ widget: GridStackWidget }>()
-const chartOptions = ref({
-		title: {
-				text: 'Sujit Joshi'
-		},
-		series: [
-				{
-						data: [1, 0, 3],
-				}
-		]
+const metricData = computed(() => {
+		return `calculating data from ${startTimestamp} - ${endTimestamp}`
+})
+
+onMounted(() => {
+		console.log("HC options", chartOptions)
 });
 </script>
 
 <template>
-		<div :gs-x="widget.x" :gs-y="widget.y"
-		     :gs-w="widget.w" :gs-h="widget.h"
-		     class="grid-stack-item">
-				<div class="grid-stack-item-content c-grid-stack-item-content">
-						<highcharts :options="chartOptions"/>
-				</div>
-		</div>
+		<highcharts :options="chartOptions"/>
 </template>
-
-<style>
-.c-grid-stack-item-content {
-		color: #2c3e50;
-		text-align: center;
-		background-color: #18bc9c;
-}
-</style>

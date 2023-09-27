@@ -15,6 +15,7 @@
     "nuxt-quasar-ui": "^2.0.5"
   },
   "dependencies": {
+    "@js-joda/core": "^5.5.3",
     "@quasar/extras": "^1.16.5",
     "gridstack": "^8.4.0",
     "highcharts": "^11.1.0",
