@@ -1,4 +1,10 @@
+<template>
+		<highcharts :options="chartOptions" :callback="reflowChart" ref="chartRef"/>
+</template>
+
 <script lang="ts" setup>
+
+
 import {LocalDateTime} from "@js-joda/core";
 import {computed} from "@vue/reactivity";
 
@@ -14,11 +20,12 @@ const metricData = computed(() => {
 		return `calculating data from ${startTimestamp} - ${endTimestamp}`
 })
 
-onMounted(() => {
-		console.log("HC options", chartOptions)
-});
-</script>
+const chartRef = ref(null);
 
-<template>
-		<highcharts :options="chartOptions"/>
-</template>
+const reflowChart = () => {
+		const chart = chartRef.value.chart;
+		console.log("Chart is ", chart)
+		const chartContainer = chartRef.value.chartContainer;
+		alert(chartContainer);
+}
+</script>

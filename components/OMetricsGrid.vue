@@ -42,23 +42,20 @@ const saveGrid = () => {
 
 const wids: OMetricsWidget [] = [{
 		origin: [0, 0],
-		dims: [12, 2],
-		name: 'Router In/Out Kbps',
-		chartOptions: {
-				title: {
-						text: 'Router IN/OUT Kbps'
-				},
-		}
-}, {
-		origin: [0, 3],
-		dims: [6, 2],
+		dims: [3, 3],
 		name: 'Router Saturation',
 		chartOptions: {
 				title: {
 						text: 'Router Saturation'
 				},
+				series: [
+						{
+								data: [10, 20, 30]
+						}
+				]
 		}
 }];
+
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
@@ -74,5 +71,4 @@ const wids: OMetricsWidget [] = [{
 		text-align: center;
 		background-color: #18bc9c;
 }
-
 </style>

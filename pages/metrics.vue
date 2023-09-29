@@ -10,7 +10,8 @@ import {LocalDateTime} from "@js-joda/core";
 
 // commonAppWideGridOptions are common for ALL grids.
 const gridOptions = {
-		minRow: 1,
+		row: 10,
 		alwaysShowResizeHandle: false,
+		//sizeToContent: true,
 }
 </script>

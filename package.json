@@ -17,7 +17,7 @@
   "dependencies": {
     "@js-joda/core": "^5.5.3",
     "@quasar/extras": "^1.16.5",
-    "gridstack": "^8.4.0",
+    "gridstack": "^9.2.2",
     "highcharts": "^11.1.0",
     "highcharts-vue": "^1.4.3",
     "quasar": "^2.12.4"

@@ -1,5 +1,5 @@
 export interface OMetricsWidget {
-    chartOptions: object,
+    chartOptions: Object,
     dims: [number, number],
     name?: string,
     origin: [number, number],
