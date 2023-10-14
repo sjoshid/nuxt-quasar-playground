@@ -1,12 +1,35 @@
 <template>
-    <div ref="containerRef" class="grid-stack-item-content c-grid-stack-item-content">
-        <highcharts ref="chartRef" :options="chartOptions"/>
+    <div class="grid-stack-item-content c-grid-stack-item-content">
+        <Chart :options="chartOptions"/>
     </div>
 </template>
 
 <script lang="ts" setup>
 import {LocalDateTime} from "@js-joda/core";
 import {computed} from "@vue/reactivity";
+import Highcharts from 'highcharts';
+import {Chart} from "highcharts-vue";
+
+Highcharts.Chart.prototype.getChartSize = function() {
+    const chart = this, optionsChart = chart.options.chart, widthOption = optionsChart.width, heightOption = optionsChart.height, containerBox = chart.getContainerBox();
+    /**
+     * The current pixel width of the chart.
+     *
+     * @name Highcharts.Chart#chartWidth
+     * @type {number}
+     */
+    chart.chartWidth = Math.max(// #1393
+        0, widthOption || containerBox.width || 600 // #1460
+    );
+    /**
+     * The current pixel height of the chart.
+     *
+     * @name Highcharts.Chart#chartHeight
+     * @type {number}
+     */
+    chart.chartHeight = Math.max(0, chart?.container?.offsetParent?.offsetHeight || 0);
+    chart.containerBox = containerBox;
+}
 
 const {chartOptions, startTimestamp, endTimestamp} = defineProps<{
     chartOptions: object,
@@ -14,27 +37,8 @@ const {chartOptions, startTimestamp, endTimestamp} = defineProps<{
     endTimestamp: LocalDateTime,
 }>()
 
-const highcharts = useNuxtApp().vueApp.component('highcharts')
-
 const metricData = computed(() => {
     return `calculating data from ${startTimestamp} - ${endTimestamp}`
-})
-
-const chartRef = ref(null), containerRef = ref(null);
-
-const reflowChart = () => {
-    if (chartRef.value.chart && containerRef.value) {
-        const chartContainer = containerRef.value
-        const chart = chartRef.value.chart
-        /*console.log("chartContainer offsetWidth", chartContainer.offsetWidth)
-		console.log("chartContainer offsetHeight", chartContainer.offsetHeight)*/
-        chart.setSize(chartContainer.offsetWidth - 3, chartContainer.offsetHeight - 3, false)
-        chart.reflow()
-    }
-}
-
-defineExpose({
-    reflowChart
 })
 </script>
 

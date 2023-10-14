@@ -6,8 +6,8 @@
                  :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                  :gs-x="widget.origin[0]" :gs-y="widget.origin[1]"
                  class="grid-stack-item">
-                <OMetric ref="oMetricRefs" :chart-options="widget.chartOptions"
-                         :end-timestamp="endTimestamp" :start-timestamp="startTimestamp"/>
+                <OMetric :chart-options="widget.chartOptions" :end-timestamp="endTimestamp"
+                         :start-timestamp="startTimestamp"/>
             </div>
         </div>
         <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
@@ -27,15 +27,10 @@ const props = defineProps<{
     endTimestamp: LocalDateTime,
 }>()
 
-const oMetricRefs = ref(null)
-
 let grid: GridStack;
 
 onMounted(() => {
     grid = GridStack.init(props.commonAppWideGridOptions);
-    oMetricRefs.value.forEach(o => {
-        o.reflowChart()
-    })
 });
 
 const saveGrid = () => {
@@ -65,6 +60,9 @@ const wids: OMetricsWidget [] = [{
     dims: [3, 3],
     name: 'Router Saturation',
     chartOptions: {
+        chart: {
+            reflow: true
+        },
         title: {
             text: 'Router Saturation 2'
         },
