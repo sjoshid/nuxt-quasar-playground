@@ -60,6 +60,9 @@ const wids: OMetricsWidget [] = [{
     dims: [3, 3],
     name: 'Router Saturation',
     chartOptions: {
+        chart: {
+            reflow: true
+        },
         title: {
             text: 'Router Saturation 2'
         },
