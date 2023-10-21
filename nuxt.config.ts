@@ -2,4 +2,7 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: ['nuxt-quasar-ui', '@vueuse/nuxt', '@pinia/nuxt'],
+    quasar: {
+        sassVariables: true
+    },
 })

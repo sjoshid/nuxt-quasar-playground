@@ -13,7 +13,9 @@
         "@types/node": "^18.17.3",
         "@vueuse/nuxt": "^10.5.0",
         "nuxt": "^3.6.5",
-        "nuxt-quasar-ui": "^2.0.5"
+        "nuxt-quasar-ui": "^2.0.5",
+        "sass": "^1.69.4",
+        "sass-loader": "10"
     },
     "dependencies": {
         "@js-joda/core": "^5.5.3",

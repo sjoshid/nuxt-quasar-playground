@@ -1,24 +1,32 @@
 <template>
     <div class="q-pa-md">
+        <div class="row justify-end">
+            <q-btn-group>
+                <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard"/>
+                <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
+                <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
+                <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
+            </q-btn-group>
+        </div>
+
         <h5 :v-if="gridName"> Showing "{{ gridName }}" </h5>
-        <div :class="{'grid-stack': true, 'y-grid-stack': true}">
-            <div v-for="(widget, index) in wids" :key="index"
-                 :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
-                 :gs-x="widget.origin[0]" :gs-y="widget.origin[1]"
-                 class="grid-stack-item">
+        <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
+            <div v-for="(widget, index) in wids" :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
+                :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
                 <OMetric :chart-options="widget.chartOptions" :end-timestamp="endTimestamp"
-                         :start-timestamp="startTimestamp"/>
+                    :start-timestamp="startTimestamp" />
             </div>
         </div>
-        <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
+        <q-btn color="primary" label="Save Grid Layout" @click="saveGrid" />
     </div>
 </template>
 
 <script lang="ts" setup>
-import {GridStack} from 'gridstack';
-import {GridStackOptions} from "gridstack/dist/types";
-import {LocalDateTime} from "@js-joda/core";
-import {OMetricsWidget} from "~/composables/oMetricsWidget";
+import { matBarChart, matRefresh, matSchedule, matPictureAsPdf, matTableChart } from '@quasar/extras/material-icons'
+import { GridStack } from 'gridstack';
+import { GridStackOptions } from "gridstack/dist/types";
+import { LocalDateTime } from "@js-joda/core";
+import { OMetricsWidget } from "~/composables/oMetricsWidget";
 
 const props = defineProps<{
     gridName?: string,
@@ -38,7 +46,7 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const wids: OMetricsWidget [] = [{
+const wids: OMetricsWidget[] = [{
     origin: [0, 0],
     dims: [3, 3],
     name: 'Router Saturation',
