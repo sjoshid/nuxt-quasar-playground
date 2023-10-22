@@ -1,20 +1,7 @@
 <template>
     <div class="q-pa-md">
         <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
-            <q-btn-dropdown color="green" label="Preset Times">
-                <q-list>
-                    <q-item clickable v-close-popup>
-                        <q-item-section>
-                            <q-item-label>Yesterday</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup>
-                        <q-item-section>
-                            <q-item-label>Last week</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                </q-list>
-            </q-btn-dropdown>
+            <q-select dense filled v-model="timePresetSelected" :options="timePresetsAvailable" label="Time Presets" />
             <q-space />
             <q-tabs dense v-model="granularity" active-bg-color="accent" indicator-color="transparent" class="shadow-2">
                 <q-tab name="raw" label="Raw" />
@@ -106,6 +93,8 @@ const startDateTime = ref('')
 const endDateTime = ref('')
 
 const granularity = ref('raw')
+const timePresetsAvailable = ref(['Yesterday', 'Last week'])
+const timePresetSelected = ref('Yesterday')
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
