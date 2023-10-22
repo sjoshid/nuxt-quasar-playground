@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import {LocalDateTime} from "@js-joda/core";
 import {computed} from "@vue/reactivity";
-import Highcharts from 'highcharts';
+import Highcharts from "highcharts"
 
 const {chartOptions, startTimestamp, endTimestamp} = defineProps<{
     chartOptions: object,

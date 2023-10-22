@@ -1,13 +1,33 @@
 <template>
     <div class="q-pa-md">
-        <div class="row justify-end">
-            <q-btn-group>
-                <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard"/>
-                <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
-                <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
-                <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
-            </q-btn-group>
-        </div>
+        <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
+            <q-btn-dropdown color="green" label="Preset Times">
+                <q-list>
+                    <q-item clickable v-close-popup>
+                        <q-item-section>
+                            <q-item-label>Yesterday</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-close-popup>
+                        <q-item-section>
+                            <q-item-label>Last week</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+            </q-btn-dropdown>
+            <q-space />
+            <q-tabs dense v-model="granularity" active-bg-color="accent" indicator-color="transparent" class="shadow-2">
+                <q-tab name="raw" label="Raw" />
+                <q-tab name="hourly" label="Hourly" />
+                <q-tab name="daily" label="Daily" />
+            </q-tabs>
+            <q-space />
+            <ODateTimePicker :start-d-time="startDateTime" :end-d-time="endDateTime" />
+            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" />
+            <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export" />
+            <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF" />
+            <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data" />
+        </q-toolbar>
 
         <h5 :v-if="gridName"> Showing "{{ gridName }}" </h5>
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
@@ -81,6 +101,11 @@ const wids: OMetricsWidget[] = [{
         ]
     }
 }];
+
+const startDateTime = ref('')
+const endDateTime = ref('')
+
+const granularity = ref('raw')
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
