@@ -9,7 +9,8 @@
                 <q-tab name="daily" label="Daily" />
             </q-tabs>
             <q-space />
-            <ODateTimePicker :start-d-time="startDateTime" :end-d-time="endDateTime" />
+            <ODateTimePicker @update:startDTime="nv => startDateTime = nv" :start-d-time="startDateTime"
+                @update:endDTime="nv => endDateTime = nv" :end-d-time="endDateTime" />
             <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" />
             <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export" />
             <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF" />
@@ -89,8 +90,8 @@ const wids: OMetricsWidget[] = [{
     }
 }];
 
-const startDateTime = ref('')
-const endDateTime = ref('')
+const startDateTime = ref('2023-10-21 12:00')
+const endDateTime = ref('2023-10-22 12:00')
 
 const granularity = ref('raw')
 const timePresetsAvailable = ref(['Yesterday', 'Last week'])
