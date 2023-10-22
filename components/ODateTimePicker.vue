@@ -58,8 +58,10 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
     startDTime: string,
     endDTime: string,
 }>()
+
+const emits = defineEmits(['update:startDTime', 'update:endDTime'])
 </script>

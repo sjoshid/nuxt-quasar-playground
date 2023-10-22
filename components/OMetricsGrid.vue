@@ -35,6 +35,7 @@ import { GridStack } from 'gridstack';
 import { GridStackOptions } from "gridstack/dist/types";
 import { LocalDateTime } from "@js-joda/core";
 import { OMetricsWidget } from "~/composables/oMetricsWidget";
+import { date } from 'quasar'
 
 const props = defineProps<{
     gridName?: string,
@@ -90,8 +91,15 @@ const wids: OMetricsWidget[] = [{
     }
 }];
 
-const startDateTime = ref('2023-10-21 12:00')
-const endDateTime = ref('2023-10-22 12:00')
+const nowTs = Date.now()
+// In Oculus, we do not have data older than a year. 
+const yearOldTs = date.subtractFromDate(nowTs, { year: 1 })
+
+// oldest start time
+const startDateTime = ref(date.formatDate(yearOldTs, 'YYYY-MM-DD HH:mm'))
+
+// latest end time
+const endDateTime = ref(date.formatDate(nowTs, 'YYYY-MM-DD HH:mm'))
 
 const granularity = ref('raw')
 const timePresetsAvailable = ref(['Yesterday', 'Last week'])
