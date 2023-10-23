@@ -3,7 +3,7 @@
         <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
             <q-select dense filled v-model="timePresetSelected" :options="timePresetsAvailable" label="Time Presets" />
             <q-space />
-            <q-tabs dense v-model="granularity" active-bg-color="accent" indicator-color="transparent" class="shadow-2">
+            <q-tabs dense v-model="granularity" active-bg-color="secondary" indicator-color="transparent" class="shadow-2">
                 <q-tab name="raw" label="Raw" />
                 <q-tab name="hourly" label="Hourly" />
                 <q-tab name="daily" label="Daily" />
