@@ -6,7 +6,7 @@
                     <q-toolbar class="col-8">
                         <!-- Metrics dropdown -->
                         <div class="q-pa-xs">
-                            <q-btn-dropdown color="green" label="Metrics">
+                            <q-btn-dropdown push color="positive" label="Metrics">
                                 <q-list>
                                     <q-item v-close-popup clickable to="/">
                                         <q-item-section>
@@ -23,7 +23,7 @@
                         </div>
                         <!-- Inventory dropdown -->
                         <div class="q-pa-xs">
-                            <q-btn-dropdown color="green" label="Inventory">
+                            <q-btn-dropdown push color="positive" label="Inventory">
                                 <q-list>
                                     <q-item v-close-popup clickable to="/inventory">
                                         <q-item-section>
@@ -34,42 +34,30 @@
                             </q-btn-dropdown>
                         </div>
                         <div class="q-pa-xs">
-                            <q-input
-                                    v-model="search"
-                                    :autofocus="true"
-                                    debounce="500"
-                                    dense
-                                    filled
-                                    placeholder="Search"
-                            >
+                            <q-input v-model="search" :autofocus="true" debounce="500" dense filled placeholder="Search">
                                 <template #append>
-                                    <q-icon name="search"/>
+                                    <q-icon name="search" />
                                 </template>
                             </q-input>
                         </div>
                     </q-toolbar>
                     <q-toolbar class="col-4">
                         <q-space></q-space>
-                        <q-tabs indicator-color="green" shrink stretch>
-                            <q-route-tab
-                                    href="/admin/user-mgmt"
-                                    icon="admin_panel_settings"
-                                    label="Admin"
-                                    name="tab2"
-                            />
+                        <q-tabs indicator-color="green" shrink stretch dense>
+                            <q-route-tab href="/admin/user-mgmt" icon="admin_panel_settings" label="Admin" name="tab2" />
                         </q-tabs>
                     </q-toolbar>
                 </div>
             </q-header>
             <q-page-container>
-                <slot/>
+                <slot />
             </q-page-container>
         </q-layout>
     </div>
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 
 const search = ref('');
 </script>

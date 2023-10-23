@@ -6,7 +6,7 @@
                     <q-toolbar class="col-8">
                         <!-- User management -->
                         <div class="q-pa-xs">
-                            <q-btn-dropdown color="green" label="User">
+                            <q-btn-dropdown push color="positive" label="User">
                                 <q-list>
                                     <q-item v-close-popup clickable>
                                         <q-item-section>
@@ -23,7 +23,7 @@
                         </div>
                         <!-- Company management -->
                         <div class="q-pa-xs">
-                            <q-btn-dropdown color="green" label="Company">
+                            <q-btn-dropdown push color="positive" label="Company">
                                 <q-list>
                                     <q-item v-close-popup clickable>
                                         <q-item-section>
@@ -43,39 +43,48 @@
                                 </q-list>
                             </q-btn-dropdown>
                         </div>
+                        <!-- Smart Alerts -->
                         <div class="q-pa-xs">
-                            <q-input
-                                    v-model="search"
-                                    :autofocus="true"
-                                    debounce="500"
-                                    dense
-                                    filled
-                                    placeholder="Search"
-                            >
+                            <q-btn-dropdown push color="positive" label="Smart Alerts">
+                                <q-list>
+                                    <q-item v-close-popup clickable>
+                                        <q-item-section>
+                                            <q-item-label>List</q-item-label>
+                                        </q-item-section>
+                                    </q-item>
+                                    <q-item v-close-popup clickable>
+                                        <q-item-section>
+                                            <q-item-label>Create</q-item-label>
+                                        </q-item-section>
+                                    </q-item>
+                                </q-list>
+                            </q-btn-dropdown>
+                        </div>
+                        <div class="q-pa-xs">
+                            <q-input v-model="search" :autofocus="true" debounce="500" dense filled placeholder="Search">
                                 <template #append>
-                                    <q-icon name="search"/>
+                                    <q-icon name="search" />
                                 </template>
                             </q-input>
                         </div>
                     </q-toolbar>
                     <q-toolbar class="col-4">
                         <q-space></q-space>
-                        <q-tabs indicator-color="green" shrink stretch>
-                            <q-route-tab href="/" icon="home" label="Home"
-                                         name="tab2"/>
+                        <q-tabs indicator-color="green" shrink stretch dense>
+                            <q-route-tab href="/" icon="home" label="Home" name="tab2" />
                         </q-tabs>
                     </q-toolbar>
                 </div>
             </q-header>
             <q-page-container>
-                <slot/>
+                <slot />
             </q-page-container>
         </q-layout>
     </div>
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 
 const search = ref('');
 </script>

@@ -27,7 +27,7 @@
                 </q-icon>
             </template>
         </q-input>
-        <q-input filled dense label="From" stack-label :model-value="endDTime">
+        <q-input filled dense label="To" stack-label :model-value="endDTime">
             <template v-slot:prepend>
                 <q-icon name="event" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
