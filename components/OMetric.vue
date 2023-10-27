@@ -1,18 +1,18 @@
 <template>
     <div class="grid-stack-item-content c-grid-stack-item-content">
-        <highcharts :options="chartOptions"/>
+        <p>Range is {{ startTimestamp }}</p>
+        <highcharts :options="chartOptions" />
     </div>
 </template>
 
 <script lang="ts" setup>
-import {LocalDateTime} from "@js-joda/core";
-import {computed} from "@vue/reactivity";
+import { computed } from "@vue/reactivity";
 import Highcharts from "highcharts"
 
-const {chartOptions, startTimestamp, endTimestamp} = defineProps<{
+const { chartOptions, startTimestamp, endTimestamp } = defineProps<{
     chartOptions: object,
-    startTimestamp: LocalDateTime,
-    endTimestamp: LocalDateTime,
+    startTimestamp: string,
+    endTimestamp: string,
 }>()
 
 Highcharts.Chart.prototype.getChartSize = function () {

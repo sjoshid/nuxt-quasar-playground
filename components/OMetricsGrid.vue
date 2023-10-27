@@ -21,8 +21,8 @@
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="(widget, index) in wids" :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                 :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
-                <OMetric :chart-options="widget.chartOptions" :end-timestamp="endTimestamp"
-                    :start-timestamp="startTimestamp" />
+                <OMetric :chart-options="widget.chartOptions" :end-timestamp="endDateTime"
+                    :start-timestamp="startDateTime" />
             </div>
         </div>
         <q-btn color="primary" label="Save Grid Layout" @click="saveGrid" />
