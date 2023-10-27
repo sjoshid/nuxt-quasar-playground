@@ -1,6 +1,6 @@
 <template>
     <div class="grid-stack-item-content c-grid-stack-item-content">
-        <p>Range is {{ startTimestamp }}</p>
+        <p>Start time is {{ startTimestamp }} and end time is {{ endTimestamp }}</p>
         <highcharts :options="chartOptions" />
     </div>
 </template>
@@ -11,8 +11,8 @@ import Highcharts from "highcharts"
 
 const { chartOptions, startTimestamp, endTimestamp } = defineProps<{
     chartOptions: object,
-    startTimestamp: string,
-    endTimestamp: string,
+    startTimestamp: number,
+    endTimestamp: number,
 }>()
 
 Highcharts.Chart.prototype.getChartSize = function () {

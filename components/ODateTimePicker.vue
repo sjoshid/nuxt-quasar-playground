@@ -59,8 +59,8 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-    startDTime: string,
-    endDTime: string,
+    startDTime: number,
+    endDTime: number,
 }>()
 
 const emits = defineEmits(['update:startDTime', 'update:endDTime'])

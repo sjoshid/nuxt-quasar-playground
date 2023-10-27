@@ -1,7 +1,11 @@
 <template>
     <div class="q-pa-md">
         <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
-            <q-select dense filled v-model="timePresetSelected" :options="timePresetsAvailable" label="Time Presets" />
+            <q-select dense filled :model-value="timePresetSelected" :options="presetOptions" label="Time Presets"
+                @update:model-value="v => {
+                    timePresetSelected = v
+                    timePresetSelected.refresh()
+                }" />
             <q-space />
             <q-tabs dense v-model="granularity" active-bg-color="secondary" indicator-color="transparent" class="shadow-2">
                 <q-tab name="raw" label="Raw" />
@@ -19,7 +23,7 @@
 
         <h5 :v-if="gridName"> Showing "{{ gridName }}" </h5>
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
-            <div v-for="(widget, index) in wids" :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
+            <div v-for="( widget, index ) in  wids " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                 :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
                 <OMetric :chart-options="widget.chartOptions" :end-timestamp="endDateTime"
                     :start-timestamp="startDateTime" />
@@ -91,19 +95,28 @@ const wids: OMetricsWidget[] = [{
     }
 }];
 
-const nowTs = Date.now()
-// In Oculus, we do not have data older than a year. 
-const yearOldTs = date.subtractFromDate(nowTs, { year: 1 })
-
-// oldest start time
-const startDateTime = ref(date.formatDate(yearOldTs, 'YYYY-MM-DD HH:mm'))
-
-// latest end time
-const endDateTime = ref(date.formatDate(nowTs, 'YYYY-MM-DD HH:mm'))
+const endDateTime = ref(Date.now())
+const startDateTime = ref(date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf())
 
 const granularity = ref('raw')
-const timePresetsAvailable = ref(['Yesterday', 'Last week'])
-const timePresetSelected = ref('Yesterday')
+const presetOptions = [
+    {
+        label: 'Last 24 hrs',
+        value: 'l24h',
+        refresh: () => {
+            endDateTime.value = Date.now()
+            startDateTime.value = date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf()
+        }
+    },
+    {
+        label: 'Yesterday',
+        value: 'yesterday',
+        refresh: () => {
+
+        }
+    }
+]
+const timePresetSelected = ref('Last 24 hrs')
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
