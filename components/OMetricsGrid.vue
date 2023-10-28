@@ -24,13 +24,7 @@
                 @update:model-value="v => {
                     timePresetSelected = v
                     timePresetSelected.refresh()
-                }">
-                <template #after-options>
-                    <q-item clickable>
-                        <q-item-section @click="customRangeDialog = true">Single line item</q-item-section>
-                    </q-item>
-                </template>
-            </q-select>
+                }" />
             <q-space />
             <q-tabs dense v-model="granularity" active-bg-color="secondary" indicator-color="transparent" class="shadow-2">
                 <q-tab name="raw" label="Raw" />
@@ -137,6 +131,13 @@ const presetOptions = [
         value: 'yesterday',
         refresh: () => {
             console.warn('How to calculate Yesterday easily?');
+        }
+    },
+    {
+        label: 'Custom Range',
+        value: 'cr',
+        refresh: () => {
+            customRangeDialog.value = true
         }
     }
 ]
