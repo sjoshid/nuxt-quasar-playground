@@ -1,11 +1,36 @@
 <template>
     <div class="q-pa-md">
+        <q-dialog v-model="customRangeDialog">
+            <q-card>
+                <q-card-section>
+                    <div class="text-h6">Set Custom Range</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <ODateTimePicker
+                        @update:startDTime="nv => startDateTime = date.extractDate(nv, 'MM-DD-YYYY HH:mm').valueOf()"
+                        :start-d-time="date.formatDate(startDateTime, 'MM-DD-YYYY HH:mm')"
+                        @update:endDTime="nv => endDateTime = date.extractDate(nv, 'MM-DD-YYYY HH:mm').valueOf()"
+                        :end-d-time="date.formatDate(endDateTime, 'MM-DD-YYYY HH:mm')" />
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn flat label="Apply" color="primary" v-close-popup />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
         <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
             <q-select dense filled :model-value="timePresetSelected" :options="presetOptions" label="Time Presets"
                 @update:model-value="v => {
                     timePresetSelected = v
                     timePresetSelected.refresh()
-                }" />
+                }">
+                <template #after-options>
+                    <q-item clickable>
+                        <q-item-section @click="customRangeDialog = true">Single line item</q-item-section>
+                    </q-item>
+                </template>
+            </q-select>
             <q-space />
             <q-tabs dense v-model="granularity" active-bg-color="secondary" indicator-color="transparent" class="shadow-2">
                 <q-tab name="raw" label="Raw" />
@@ -13,8 +38,7 @@
                 <q-tab name="daily" label="Daily" />
             </q-tabs>
             <q-space />
-            <ODateTimePicker @update:startDTime="nv => startDateTime = nv" :start-d-time="startDateTime"
-                @update:endDTime="nv => endDateTime = nv" :end-d-time="endDateTime" />
+
             <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" />
             <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export" />
             <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF" />
@@ -112,11 +136,12 @@ const presetOptions = [
         label: 'Yesterday',
         value: 'yesterday',
         refresh: () => {
-
+            console.warn('How to calculate Yesterday easily?');
         }
     }
 ]
-const timePresetSelected = ref('Last 24 hrs')
+const timePresetSelected = ref(presetOptions[0])
+const customRangeDialog = ref(false)
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
