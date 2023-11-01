@@ -1,13 +1,12 @@
 <template>
     <NuxtLayout name="user-layout">
         <OMetricsGrid :common-app-wide-grid-options="gridOptions" :end-timestamp="LocalDateTime.now().minusHours(24)"
-                      :start-timestamp="LocalDateTime.now()"
-                      grid-name="Some name"/>
+            :start-timestamp="LocalDateTime.now()" grid-name="Performance Metrics" />
     </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
-import {LocalDateTime} from "@js-joda/core";
+import { LocalDateTime } from "@js-joda/core";
 
 // commonAppWideGridOptions are common for ALL grids.
 const gridOptions = {

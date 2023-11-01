@@ -39,7 +39,9 @@
             <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data" />
         </q-toolbar>
 
-        <h5 :v-if="gridName"> Showing "{{ gridName }}" </h5>
+        <h5 :v-if="gridName"> {{ gridName }} </h5>
+        <h6> {{ gridDetails }}</h6>
+
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  wids " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                 :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
@@ -65,6 +67,7 @@ const props = defineProps<{
     startTimestamp: LocalDateTime,
     endTimestamp: LocalDateTime,
 }>()
+const emits = defineEmits(['update:gridName'])
 
 let grid: GridStack;
 
@@ -75,6 +78,13 @@ onMounted(() => {
 const saveGrid = () => {
     const widgets = grid.save(false)
     console.log(widgets)
+}
+
+const getGridDetails = (startDate: number, endDate: number): string => {
+    const startTimeStr = date.formatDate(startDate, 'MM-DD-YYYY HH:mm')
+    const endTimeStr = date.formatDate(endDate, 'MM-DD-YYYY HH:mm')
+    const newGridName = `Showing metrics between ${endTimeStr} - ${startTimeStr}`
+    return newGridName
 }
 
 const wids: OMetricsWidget[] = [{
@@ -116,6 +126,7 @@ const wids: OMetricsWidget[] = [{
 const endDateTime = ref(Date.now())
 const startDateTime = ref(date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf())
 
+const gridDetails = ref(getGridDetails(endDateTime.value, startDateTime.value))
 const granularity = ref('raw')
 const presetOptions = [
     {
@@ -124,6 +135,7 @@ const presetOptions = [
         refresh: () => {
             endDateTime.value = Date.now()
             startDateTime.value = date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf()
+            gridDetails.value = getGridDetails(endDateTime.value, startDateTime.value)
         }
     },
     {
