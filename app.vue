@@ -22,7 +22,7 @@
                         <q-btn-dropdown color="secondary" push no-caps icon="image" label="john.doe@tnsi.com">
                         </q-btn-dropdown>
                         <!-- q-toggle v-model needs a Ref<boolean>. If I provide $q.dark.mode, I get hydration errors in browser console. -->
-                        <q-toggle v-model="darkModeActive" checked-icon="dark_mode" color="green"
+                        <q-toggle v-model="themeStore.darkModeEnabled" checked-icon="dark_mode" color="green"
                             unchecked-icon="light_mode" @click="$q.dark.toggle()" />
                     </div>
                 </q-toolbar>
@@ -38,8 +38,8 @@
 </template>
 
 <script lang="ts" setup>
-import { darkModeActive } from '~/stores/dummy-store'
+const themeStore = useThemeStore()
 const $q = useQuasar()
 
-$q.dark.set(darkModeActive.value)
+$q.dark.set(themeStore.darkModeEnabled)
 </script>

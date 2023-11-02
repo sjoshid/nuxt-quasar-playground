@@ -51,6 +51,4 @@ const tableData = [
   },
 ];
 
-const darkModeActive = ref(true)
-
-export { tableCols, tableData, darkModeActive };
+export { tableCols, tableData };
