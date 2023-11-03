@@ -19,7 +19,7 @@
                                 </q-item>
                             </q-list>
                         </q-btn-dropdown>
-                        <q-btn-dropdown color="secondary" push no-caps icon="image" label="john.doe@tnsi.com">
+                        <q-btn-dropdown color="secondary" push no-caps icon="image" label="jdoe@company.com">
                         </q-btn-dropdown>
                         <!-- q-toggle v-model needs a Ref<boolean>. If I provide $q.dark.mode, I get hydration errors in browser console. -->
                         <q-toggle v-model="themeStore.darkModeEnabled" checked-icon="dark_mode" color="green"
