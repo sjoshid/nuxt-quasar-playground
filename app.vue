@@ -31,6 +31,7 @@
                 Company Info
             </q-footer>
             <q-page-container>
+                <div>Bored API data is {{ data }}</div>
                 <NuxtPage />
             </q-page-container>
         </q-layout>
@@ -42,4 +43,7 @@ const themeStore = useThemeStore()
 const $q = useQuasar()
 
 $q.dark.set(themeStore.darkModeEnabled)
+
+const { data } = await useFetch('https://www.boredapi.com/api/activity')
+//const data = await $fetch('https://www.boredapi.com/api/activity')
 </script>
