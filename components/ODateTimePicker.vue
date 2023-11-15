@@ -5,7 +5,7 @@
                 <q-icon class="cursor-pointer" name="event">
                     <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                         <q-date :model-value="startDateTime.format(usDateFormatter)" :mask="quasarFormat"
-                                @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.of('UTC'))">
+                                @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
                             <div class="row items-center justify-end">
                                 <q-btn v-close-popup color="primary" flat label="Close"/>
                             </div>
@@ -18,7 +18,7 @@
                 <q-icon class="cursor-pointer" name="access_time">
                     <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                         <q-time :model-value="startDateTime.format(usDateFormatter)" format24h :mask="quasarFormat"
-                            @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.of('UTC'))">
+                            @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
                             <div class="row items-center justify-end">
                                 <q-btn v-close-popup color="primary" flat label="Close" />
                             </div>
@@ -27,12 +27,12 @@
                 </q-icon>
             </template>
         </q-input>
-        <!-- <q-input :model-value="endDateTime.format(usDateFormatter)" dense filled label="To" stack-label>
+         <q-input :model-value="endDateTime.format(usDateFormatter)" dense filled label="To" stack-label>
             <template v-slot:prepend>
                 <q-icon class="cursor-pointer" name="event">
                     <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                         <q-date :model-value="endDateTime.format(usDateFormatter)" :mask="quasarFormat"
-                            @update:model-value="nv => $emit('update:endDateTime', nv)">
+                            @update:model-value="nv => endDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
                             <div class="row items-center justify-end">
                                 <q-btn v-close-popup color="primary" flat label="Close" />
                             </div>
@@ -45,7 +45,7 @@
                 <q-icon class="cursor-pointer" name="access_time">
                     <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                         <q-time :model-value="endDateTime.format(usDateFormatter)" format24h :mask="quasarFormat"
-                            @update:model-value="nv => $emit('update:endDateTime', nv)">
+                            @update:model-value="nv => endDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
                             <div class="row items-center justify-end">
                                 <q-btn v-close-popup color="primary" flat label="Close" />
                             </div>
@@ -53,7 +53,7 @@
                     </q-popup-proxy>
                 </q-icon>
             </template>
-        </q-input> -->
+        </q-input>
     </div>
 </template>
 
