@@ -1,18 +1,18 @@
 <template>
     <div class="grid-stack-item-content c-grid-stack-item-content">
-        <p>Start time is {{ startTimestamp }} and end time is {{ endTimestamp }}</p>
+        <p>Start time is {{ startDateTime.format(usDateFormatter) }} and end time is {{ endDateTime.format(usDateFormatter) }}</p>
         <highcharts :options="chartOptions" />
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "@vue/reactivity";
 import Highcharts from "highcharts"
+import {ZonedDateTime} from "@js-joda/core";
 
-const { chartOptions, startTimestamp, endTimestamp } = defineProps<{
+const { chartOptions, startDateTime, endDateTime } = defineProps<{
     chartOptions: object,
-    startTimestamp: number,
-    endTimestamp: number,
+    startDateTime: Ref<ZonedDateTime>,
+    endDateTime: Ref<ZonedDateTime>,
 }>()
 
 Highcharts.Chart.prototype.getChartSize = function () {
@@ -40,7 +40,7 @@ Highcharts.Chart.prototype.getChartSize = function () {
 const highcharts = useNuxtApp().vueApp.component('highcharts')
 
 const metricData = computed(() => {
-    return `calculating data from ${startTimestamp} - ${endTimestamp}`
+    return `calculating data from ${startDateTime.value} - ${endDateTime.value}`
 })
 </script>
 

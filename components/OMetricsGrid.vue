@@ -59,8 +59,8 @@ import {ZonedDateTime} from "@js-joda/core";
 const props = defineProps<{
     gridName?: string,
     commonAppWideGridOptions: GridStackOptions,
-    startDateTime: ZonedDateTime,
-    endDateTime: ZonedDateTime,
+    defaultStartDateTime: Ref<ZonedDateTime>,
+    defaultEndDateTime: Ref<ZonedDateTime>,
 }>()
 const emits = defineEmits(['update:gridName'])
 

@@ -5,7 +5,7 @@
                 <q-icon class="cursor-pointer" name="event">
                     <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                         <q-date :model-value="startDateTime.format(usDateFormatter)" :mask="quasarFormat"
-                                @update:model-value="nv => startDateTime.value = ZonedDateTime.parse(nv, usDateFormatter)">
+                                @update:model-value="nv => startDateTime.value = ZonedDateTime.parse(nv, usDateFormatter, )">
                             <div class="row items-center justify-end">
                                 <q-btn v-close-popup color="primary" flat label="Close" />
                             </div>
