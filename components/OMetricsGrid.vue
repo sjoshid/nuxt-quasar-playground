@@ -54,11 +54,9 @@
 </template>
 
 <script lang="ts" setup>
-import { matBarChart, matRefresh, matSchedule, matPictureAsPdf, matTableChart } from '@quasar/extras/material-icons'
-import { GridStack } from 'gridstack';
-import { GridStackOptions } from "gridstack/dist/types";
+import { matRefresh, matSchedule, matPictureAsPdf, matTableChart } from '@quasar/extras/material-icons'
+import { GridStack, GridStackOptions } from 'gridstack';
 import { LocalDateTime } from "@js-joda/core";
-import { OMetricsWidget } from "~/composables/oMetricsWidget";
 import { date } from 'quasar'
 
 const props = defineProps<{
