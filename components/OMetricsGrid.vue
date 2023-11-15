@@ -7,63 +7,60 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    <ODateTimePicker
-                        @update:startDTime="nv => startDateTime = date.extractDate(nv, 'MM-DD-YYYY HH:mm').valueOf()"
-                        :start-d-time="date.formatDate(startDateTime, 'MM-DD-YYYY HH:mm')"
-                        @update:endDTime="nv => endDateTime = date.extractDate(nv, 'MM-DD-YYYY HH:mm').valueOf()"
-                        :end-d-time="date.formatDate(endDateTime, 'MM-DD-YYYY HH:mm')" />
+                    <ODateTimePicker :end-date-time="endDateTime" :start-date-time="startDateTime"/>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn flat label="Apply" color="primary" v-close-popup />
+                    <q-btn v-close-popup color="primary" flat label="Apply" @click="getGridDetails"/>
                 </q-card-actions>
             </q-card>
         </q-dialog>
-        <q-toolbar dense class="bg-primary shadow-2 rounded-borders">
-            <q-select dense filled :model-value="timePresetSelected" :options="presetOptions" label="Time Presets"
-                @update:model-value="v => {
+        <q-toolbar class="bg-primary shadow-2 rounded-borders" dense>
+            <q-select :model-value="timePresetSelected" :options="presetOptions" dense filled label="Time Presets"
+                      @update:model-value="v => {
                     timePresetSelected = v
                     timePresetSelected.refresh()
-                }" />
-            <q-space />
-            <q-tabs dense v-model="granularity" active-bg-color="secondary" indicator-color="transparent" class="shadow-2">
-                <q-tab name="raw" label="Raw" />
-                <q-tab name="hourly" label="Hourly" />
-                <q-tab name="daily" label="Daily" />
+                }"/>
+            <q-space/>
+            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense
+                    indicator-color="transparent">
+                <q-tab label="Raw" name="raw"/>
+                <q-tab label="Hourly" name="hourly"/>
+                <q-tab label="Daily" name="daily"/>
             </q-tabs>
-            <q-space />
+            <q-space/>
 
-            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" />
-            <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export" />
-            <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF" />
-            <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data" />
+            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard"/>
+            <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
+            <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
+            <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
         </q-toolbar>
 
-        <h5 :v-if="gridName"> {{ gridName }} </h5>
-        <h6> {{ gridDetails }}</h6>
+        <p>
+            <h3 :v-if="gridName"> {{ gridName }} </h3>
+        </p>
 
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
-            <div v-for="( widget, index ) in  wids " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
-                :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
-                <OMetric :chart-options="widget.chartOptions" :end-timestamp="endDateTime"
-                    :start-timestamp="startDateTime" />
+            <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
+                 :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
+                <OMetric :chart-options="widget.chartOptions" :end-date-time="endDateTime"
+                         :start-date-time="startDateTime"/>
             </div>
         </div>
-        <q-btn color="primary" label="Save Grid Layout" @click="saveGrid" />
+        <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { matRefresh, matSchedule, matPictureAsPdf, matTableChart } from '@quasar/extras/material-icons'
-import { GridStack, GridStackOptions } from 'gridstack';
-import { LocalDateTime } from "@js-joda/core";
-import { date } from 'quasar'
+import {matPictureAsPdf, matRefresh, matSchedule, matTableChart} from '@quasar/extras/material-icons'
+import {GridStack, GridStackOptions} from 'gridstack';
+import {ZonedDateTime} from "@js-joda/core";
 
 const props = defineProps<{
     gridName?: string,
     commonAppWideGridOptions: GridStackOptions,
-    startTimestamp: LocalDateTime,
-    endTimestamp: LocalDateTime,
+    startDateTime: ZonedDateTime,
+    endDateTime: ZonedDateTime,
 }>()
 const emits = defineEmits(['update:gridName'])
 
@@ -78,62 +75,24 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const getGridDetails = (startDate: number, endDate: number): string => {
-    const startTimeStr = date.formatDate(startDate, 'MM-DD-YYYY HH:mm')
-    const endTimeStr = date.formatDate(endDate, 'MM-DD-YYYY HH:mm')
-    const newGridName = `Showing metrics between ${endTimeStr} - ${startTimeStr}`
-    return newGridName
+const getGridDetails = (): string => {
+    //return `${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`
+    return ''
 }
 
-const wids: OMetricsWidget[] = [{
-    origin: [0, 0],
-    dims: [3, 3],
-    name: 'Router Saturation',
-    chartOptions: {
-        chart: {
-            reflow: true
-        },
-        title: {
-            text: 'Router Saturation 1'
-        },
-        series: [
-            {
-                data: [10, 20, 30]
-            }
-        ]
-    }
-}, {
-    origin: [0, 3],
-    dims: [3, 3],
-    name: 'Router Saturation',
-    chartOptions: {
-        chart: {
-            reflow: true
-        },
-        title: {
-            text: 'Router Saturation 2'
-        },
-        series: [
-            {
-                data: [10, 20, 30]
-            }
-        ]
-    }
-}];
+const endDateTime = ref(nowUTC())
+const startDateTime = ref(endDateTime.value.minusHours(24))
 
-const endDateTime = ref(Date.now())
-const startDateTime = ref(date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf())
-
-const gridDetails = ref(getGridDetails(endDateTime.value, startDateTime.value))
+//const gridDetails = ref(getGridDetails(endDateTime.value, startDateTime.value))
 const granularity = ref('raw')
 const presetOptions = [
     {
         label: 'Last 24 hrs',
         value: 'l24h',
         refresh: () => {
-            endDateTime.value = Date.now()
-            startDateTime.value = date.subtractFromDate(endDateTime.value, { hours: 24 }).valueOf()
-            gridDetails.value = getGridDetails(endDateTime.value, startDateTime.value)
+            endDateTime.value = nowUTC()
+            startDateTime.value = endDateTime.value.minusHours(24)
+            //gridDetails.value = getGridDetails(endDateTime.value, startDateTime.value)
         }
     },
     {
