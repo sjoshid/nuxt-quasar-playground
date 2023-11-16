@@ -23,7 +23,7 @@
                         </q-btn-dropdown>
                         <!-- q-toggle v-model needs a Ref<boolean>. If I provide $q.dark.mode, I get hydration errors in browser console. -->
                         <q-toggle v-model="themeStore.darkModeEnabled" checked-icon="dark_mode" color="green"
-                            unchecked-icon="light_mode" @click="$q.dark.toggle()" />
+                                  unchecked-icon="light_mode" @click="$q.dark.toggle()"/>
                     </div>
                 </q-toolbar>
             </q-header>
@@ -32,7 +32,7 @@
             </q-footer>
             <q-page-container>
                 <div>Bored API data is {{ data }}</div>
-                <NuxtPage />
+                <NuxtPage/>
             </q-page-container>
         </q-layout>
     </div>
@@ -44,6 +44,6 @@ const $q = useQuasar()
 
 $q.dark.set(themeStore.darkModeEnabled)
 
-const { data } = await useFetch('https://www.boredapi.com/api/activity')
+const {data} = await useFetch('https://www.boredapi.com/api/activity')
 //const data = await $fetch('https://www.boredapi.com/api/activity')
 </script>

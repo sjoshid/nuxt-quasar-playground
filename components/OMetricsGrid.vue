@@ -11,7 +11,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn v-close-popup color="primary" flat label="Apply" @click="getGridDetails"/>
+                    <q-btn v-close-popup color="primary" flat label="Apply" @click="updateTimeRangeLabel"/>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -36,9 +36,10 @@
             <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
         </q-toolbar>
 
-        <p>
-            <h3 :v-if="gridName"> {{ gridName }} </h3>
-        </p>
+        <div class="row">
+            <h3 :v-if="gridName" class="col-10"> {{ gridName }} </h3>
+            <i class="col">{{ currentGridTimeRangeLabel }}</i>
+        </div>
 
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
@@ -75,13 +76,13 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const getGridDetails = (): string => {
-    //return `${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`
-    return ''
+const updateTimeRangeLabel = () => {
+    currentGridTimeRangeLabel.value = `${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`
 }
 
 const endDateTime = ref(nowUTC())
 const startDateTime = ref(endDateTime.value.minusHours(24))
+const currentGridTimeRangeLabel = ref(`${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`)
 
 //const gridDetails = ref(getGridDetails(endDateTime.value, startDateTime.value))
 const granularity = ref('raw')

@@ -69,11 +69,6 @@ const props = defineProps<{
     },
 }>()
 
-const emit = defineEmits<{
-    (event: 'update:startDateTime', zdt: ZonedDateTime): void
-    (event: 'update:endDateTime', zdt: ZonedDateTime): void
-}>()
-
 /*onMounted(() => {
     console.info(props.startDateTime.format(usDateFormatter)) // prints 11/13/2023 20:14:05
     quasar has MM-DD-YYYY HH:mm
