@@ -36,10 +36,10 @@
             <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
         </q-toolbar>
 
-        <div class="row">
-            <h3 :v-if="gridName" class="col-10"> {{ gridName }} </h3>
-            <i class="col">{{ currentGridTimeRangeLabel }}</i>
-        </div>
+        <p style="padding: 10px">
+            <span :v-if="gridName" style="font-size: 40px">{{ gridName }}&nbsp;</span>
+            <span style="font-size: 16px;"><i>{{ currentGridTimeRangeLabel }}</i></span>
+        </p>
 
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import {matPictureAsPdf, matRefresh, matSchedule, matTableChart} from '@quasar/extras/material-icons'
 import {GridStack, GridStackOptions} from 'gridstack';
-import {ZonedDateTime} from "@js-joda/core";
+import {ChronoUnit, TemporalUnit, ZonedDateTime} from "@js-joda/core";
 
 const props = defineProps<{
     gridName?: string,
@@ -93,14 +93,16 @@ const presetOptions = [
         refresh: () => {
             endDateTime.value = nowUTC()
             startDateTime.value = endDateTime.value.minusHours(24)
-            //gridDetails.value = getGridDetails(endDateTime.value, startDateTime.value)
+            updateTimeRangeLabel()
         }
     },
     {
         label: 'Yesterday',
         value: 'yesterday',
         refresh: () => {
-            console.warn('How to calculate Yesterday easily?');
+            endDateTime.value = nowUTC().truncatedTo(ChronoUnit.DAYS)
+            startDateTime.value = endDateTime.value.minusHours(24)
+            updateTimeRangeLabel()
         }
     },
     {
