@@ -37,7 +37,7 @@
         </q-toolbar>
 
         <p style="padding: 10px">
-            <span :v-if="gridName" style="font-size: 40px">{{ gridName }}&nbsp;</span>
+            <span v-if="gridName" style="font-size: 40px">{{ gridName }}&nbsp;</span>
             <span style="font-size: 16px;"><i>{{ currentGridTimeRangeLabel }}</i></span>
         </p>
 
@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import {matPictureAsPdf, matRefresh, matSchedule, matTableChart} from '@quasar/extras/material-icons'
 import {GridStack, GridStackOptions} from 'gridstack';
-import {ChronoUnit, TemporalUnit, ZonedDateTime} from "@js-joda/core";
+import {ChronoUnit, ZonedDateTime} from "@js-joda/core";
 
 const props = defineProps<{
     gridName?: string,
