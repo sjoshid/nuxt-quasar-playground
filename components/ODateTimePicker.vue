@@ -99,6 +99,7 @@ const endDateTime = ref(nowUTC())
 const startDateTime = ref(endDateTime.value.minusHours(1))
 
 const calculatePeriod = () => {
+    // sj_todo do some date validation before emitting. eg., end date cannot be before start date, etc.
     const p: PresetDetails = {
         startDateTime: startDateTime.value,
         endDateTime: endDateTime.value,
