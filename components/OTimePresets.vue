@@ -12,8 +12,6 @@ import {Granularity, PresetDetails} from "~/composables/oMetricsWidget";
 
 interface Props {
     label?: string,
-    startDateTime?: Ref<ZonedDateTime>, // is this required?
-    endDateTime?: Ref<ZonedDateTime>, // is this required?
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -66,7 +64,7 @@ const availablePresets = [
     }
 ]
 
-const selectedPreset = ref(availablePresets[0])
+const selectedPreset = ref(availablePresets[1])
 
 onMounted(() => {
     emit('update:period', selectedPreset.value.period())

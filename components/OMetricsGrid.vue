@@ -79,7 +79,6 @@ const period = shallowRef<PresetDetails>({
     available: []
 })
 
-
 const customRangeDialog = ref(false)
 </script>
 
