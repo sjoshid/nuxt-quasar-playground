@@ -1,22 +1,7 @@
 <template>
     <div class="q-pa-md">
-        <!--        <q-dialog v-model="customRangeDialog">-->
-        <!--            <q-card>-->
-        <!--                <q-card-section>-->
-        <!--                    <div class="text-h6">Set Custom Range</div>-->
-        <!--                </q-card-section>-->
-
-        <!--                <q-card-section class="q-pt-none">-->
-        <!--                    <ODateTimePicker :end-date-time="endDateTime" :start-date-time="startDateTime"/>-->
-        <!--                </q-card-section>-->
-
-        <!--                <q-card-actions align="right">-->
-        <!--                    <q-btn v-close-popup color="primary" flat label="Apply" @click="updateTimeRangeLabel"/>-->
-        <!--                </q-card-actions>-->
-        <!--            </q-card>-->
-        <!--        </q-dialog>-->
         <q-toolbar class="bg-primary shadow-2 rounded-borders" dense>
-            <OTimePresets label="Time Presets" @update:period="p => period = p"/>
+            <OTimePresets label="Time Presets" show-custom-preset @update:period="p => period = p"/>
             <q-space/>
             <!--            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense-->
             <!--                    indicator-color="transparent">-->

@@ -1,21 +1,28 @@
 <template>
+    <ODateTimePicker :custom-range-dialog="customRangeDialog" @discard="customRangeDialog = false"/>
     <q-select :model-value="selectedPreset.label" :options="availablePresets" dense filled :label="props.label"
               @update:model-value="nv => {
             selectedPreset = nv
-            $emit('update:period', nv.period())
+            if (selectedPreset.value != 'ctp') {
+                $emit('update:period', nv.period())
+            } else {
+                customRangeDialog = true
+            }
         }"/>
 </template>
 
 <script setup lang="ts">
-import {ChronoUnit, ZonedDateTime} from "@js-joda/core";
+import {ChronoUnit} from "@js-joda/core";
 import {Granularity, PresetDetails} from "~/composables/oMetricsWidget";
 
 interface Props {
     label?: string,
+    showCustomPreset?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
     label: 'Presets',
+    showCustomPreset: false,
 })
 
 const emit = defineEmits<{
@@ -65,6 +72,25 @@ const availablePresets = [
 ]
 
 const selectedPreset = ref(availablePresets[1])
+
+const customRangeDialog = ref(false)
+
+if (props.showCustomPreset) {
+    availablePresets.push(
+        {
+            label: 'Custom',
+            value: 'ctp',
+            period: (): PresetDetails => {
+                // This preset is invalid
+                return {
+                    startDateTime: nowUTC(),
+                    endDateTime: nowUTC(),
+                    available: []
+                }
+            }
+        }
+    )
+}
 
 onMounted(() => {
     emit('update:period', selectedPreset.value.period())
