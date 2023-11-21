@@ -68,7 +68,7 @@
             </q-card-section>
 
             <q-card-actions align="right">
-                <q-btn v-close-popup color="primary" flat label="Apply"/>
+                <q-btn v-close-popup color="primary" flat label="Apply" @click="calculatePeriod"/>
                 <q-btn v-close-popup color="primary" flat label="Close" @click="$emit('discard')"/>
             </q-card-actions>
         </q-card>
@@ -77,6 +77,7 @@
 
 <script lang="ts" setup>
 import {LocalDateTime, ZonedDateTime, ZoneId} from "@js-joda/core";
+import {PresetDetails} from "~/composables/oMetricsWidget";
 
 interface Props {
     leftRight?: boolean,
@@ -90,10 +91,20 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-    (event: 'discard'): void
+    (event: 'discard'): void,
+    (event: 'update:period', details: PresetDetails): void
 }>()
 
 const endDateTime = ref(nowUTC())
 const startDateTime = ref(endDateTime.value.minusHours(1))
+
+const calculatePeriod = () => {
+    const p: PresetDetails = {
+        startDateTime: startDateTime.value,
+        endDateTime: endDateTime.value,
+        available: []
+    }
+    emit('update:period', p)
+}
 
 </script>

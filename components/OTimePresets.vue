@@ -1,5 +1,8 @@
 <template>
-    <ODateTimePicker :custom-range-dialog="customRangeDialog" @discard="customRangeDialog = false"/>
+    <ODateTimePicker :custom-range-dialog="customRangeDialog" @discard="customRangeDialog = false" @update:period="details => {
+        $emit('update:period', details)
+        customRangeDialog = false
+    }"/>
     <q-select :model-value="selectedPreset.label" :options="availablePresets" dense filled :label="props.label"
               @update:model-value="nv => {
             selectedPreset = nv
