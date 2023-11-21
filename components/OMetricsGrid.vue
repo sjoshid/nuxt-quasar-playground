@@ -1,33 +1,29 @@
 <template>
     <div class="q-pa-md">
-        <q-dialog v-model="customRangeDialog">
-            <q-card>
-                <q-card-section>
-                    <div class="text-h6">Set Custom Range</div>
-                </q-card-section>
+        <!--        <q-dialog v-model="customRangeDialog">-->
+        <!--            <q-card>-->
+        <!--                <q-card-section>-->
+        <!--                    <div class="text-h6">Set Custom Range</div>-->
+        <!--                </q-card-section>-->
 
-                <q-card-section class="q-pt-none">
-                    <ODateTimePicker :end-date-time="endDateTime" :start-date-time="startDateTime"/>
-                </q-card-section>
+        <!--                <q-card-section class="q-pt-none">-->
+        <!--                    <ODateTimePicker :end-date-time="endDateTime" :start-date-time="startDateTime"/>-->
+        <!--                </q-card-section>-->
 
-                <q-card-actions align="right">
-                    <q-btn v-close-popup color="primary" flat label="Apply" @click="updateTimeRangeLabel"/>
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
+        <!--                <q-card-actions align="right">-->
+        <!--                    <q-btn v-close-popup color="primary" flat label="Apply" @click="updateTimeRangeLabel"/>-->
+        <!--                </q-card-actions>-->
+        <!--            </q-card>-->
+        <!--        </q-dialog>-->
         <q-toolbar class="bg-primary shadow-2 rounded-borders" dense>
-            <q-select :model-value="timePresetSelected" :options="presetOptions" dense filled label="Time Presets"
-                      @update:model-value="v => {
-                    timePresetSelected = v
-                    timePresetSelected.refresh()
-                }"/>
+            <OTimePresets label="Time Presets" @update:period="p => period = p"/>
             <q-space/>
-            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense
-                    indicator-color="transparent">
-                <q-tab label="Raw" name="raw"/>
-                <q-tab label="Hourly" name="hourly"/>
-                <q-tab label="Daily" name="daily"/>
-            </q-tabs>
+            <!--            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense-->
+            <!--                    indicator-color="transparent">-->
+            <!--                <q-tab label="Raw" name="raw"/>-->
+            <!--                <q-tab label="Hourly" name="hourly"/>-->
+            <!--                <q-tab label="Daily" name="daily"/>-->
+            <!--            </q-tabs>-->
             <q-space/>
 
             <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard"/>
@@ -38,14 +34,13 @@
 
         <p style="padding: 10px">
             <span v-if="gridName" style="font-size: 40px">{{ gridName }}&nbsp;</span>
-            <span style="font-size: 16px;"><i>{{ currentGridTimeRangeLabel }}</i></span>
+            <span style="font-size: 16px;"><i>{{ updateTimeRangeLabel }}</i></span>
         </p>
 
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                  :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
-                <OMetric :chart-options="widget.chartOptions" :end-date-time="endDateTime"
-                         :start-date-time="startDateTime"/>
+                <OMetric :chart-options="widget.chartOptions" :period="period"/>
             </div>
         </div>
         <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
@@ -55,13 +50,11 @@
 <script lang="ts" setup>
 import {matPictureAsPdf, matRefresh, matSchedule, matTableChart} from '@quasar/extras/material-icons'
 import {GridStack, GridStackOptions} from 'gridstack';
-import {ChronoUnit, ZonedDateTime} from "@js-joda/core";
+import {PresetDetails} from "~/composables/oMetricsWidget";
 
 const props = defineProps<{
     gridName?: string,
     commonAppWideGridOptions: GridStackOptions,
-    defaultStartDateTime: Ref<ZonedDateTime>,
-    defaultEndDateTime: Ref<ZonedDateTime>,
 }>()
 const emits = defineEmits(['update:gridName'])
 
@@ -76,44 +69,17 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const updateTimeRangeLabel = () => {
-    currentGridTimeRangeLabel.value = `${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`
-}
+const updateTimeRangeLabel = computed(() => {
+    return `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
+})
 
-const endDateTime = ref(nowUTC())
-const startDateTime = ref(endDateTime.value.minusHours(24))
-const currentGridTimeRangeLabel = ref(`${startDateTime.value.format(usDateFormatter)} - ${endDateTime.value.format(usDateFormatter)}`)
+const period = shallowRef<PresetDetails>({
+    startDateTime: nowUTC(),
+    endDateTime: nowUTC(),
+    available: []
+})
 
-//const gridDetails = ref(getGridDetails(endDateTime.value, startDateTime.value))
-const granularity = ref('raw')
-const presetOptions = [
-    {
-        label: 'Last 24 hrs',
-        value: 'l24h',
-        refresh: () => {
-            endDateTime.value = nowUTC()
-            startDateTime.value = endDateTime.value.minusHours(24)
-            updateTimeRangeLabel()
-        }
-    },
-    {
-        label: 'Yesterday',
-        value: 'yesterday',
-        refresh: () => {
-            endDateTime.value = nowUTC().truncatedTo(ChronoUnit.DAYS)
-            startDateTime.value = endDateTime.value.minusHours(24)
-            updateTimeRangeLabel()
-        }
-    },
-    {
-        label: 'Custom Range',
-        value: 'cr',
-        refresh: () => {
-            customRangeDialog.value = true
-        }
-    }
-]
-const timePresetSelected = ref(presetOptions[0])
+
 const customRangeDialog = ref(false)
 </script>
 

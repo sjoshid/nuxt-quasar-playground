@@ -34,7 +34,7 @@
                             </q-btn-dropdown>
                         </div>
                         <div class="q-pa-xs">
-                            <q-input v-model="search" :autofocus="true" debounce="500" dense filled placeholder="Search">
+                            <q-input v-model="search" autofocus debounce="500" dense filled placeholder="Search">
                                 <template #append>
                                     <q-icon name="search" />
                                 </template>
