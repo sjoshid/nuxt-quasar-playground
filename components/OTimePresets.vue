@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import {ChronoUnit} from "@js-joda/core";
-import {Granularity, PresetDetails} from "~/composables/oMetricsWidget";
 
 interface Props {
     label?: string,
