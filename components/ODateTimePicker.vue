@@ -6,7 +6,6 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-
                 <div :class="{ 'col': !leftRight, 'row': leftRight }" class="justify-between q-gutter-y-md">
                     <q-input :model-value="startDateTime.format(usDateFormatter)" dense filled label="From" stack-label>
                         <template v-slot:prepend>
@@ -68,8 +67,8 @@
             </q-card-section>
 
             <q-card-actions align="right">
-                <q-btn v-close-popup color="primary" flat label="Apply" @click="calculatePeriod"/>
                 <q-btn v-close-popup color="primary" flat label="Close" @click="$emit('discard')"/>
+                <q-btn v-close-popup color="primary" label="Apply" @click="calculatePeriod"/>
             </q-card-actions>
         </q-card>
     </q-dialog>
