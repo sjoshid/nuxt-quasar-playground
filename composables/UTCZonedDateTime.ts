@@ -11,6 +11,7 @@ export interface Preset {
     label: string,
     value: string,
     period: () => PresetDetails,
+    fluid: boolean, // should be true if now is constantly changing. Like last hr, last 24 hrs etc.
 }
 
 export const availablePresets: Preset[] = [
@@ -25,7 +26,8 @@ export const availablePresets: Preset[] = [
                 endDateTime,
                 available: [Granularity.MINUTE, Granularity.HOUR]
             }
-        }
+        },
+        fluid: true,
     },
     {
         label: 'Yesterday',
@@ -38,7 +40,8 @@ export const availablePresets: Preset[] = [
                 endDateTime,
                 available: [Granularity.MINUTE, Granularity.HOUR]
             }
-        }
+        },
+        fluid: false,
     },
     {
         label: 'Last 7 days',
@@ -51,6 +54,7 @@ export const availablePresets: Preset[] = [
                 endDateTime,
                 available: [Granularity.MINUTE, Granularity.HOUR]
             }
-        }
+        },
+        fluid: false,
     }
 ]
