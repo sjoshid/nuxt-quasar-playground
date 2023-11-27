@@ -1,8 +1,8 @@
 <template>
     <div class="grid-stack-item-content c-grid-stack-item-content">
-        <p v-if="period !== null">Period is {{ period.startDateTime.format(usDateFormatter) }} - {{
-                period.endDateTime.format(usDateFormatter)
-            }}</p>
+<!--        <p v-if="period !== null">Period is {{ period.startDateTime.format(usDateFormatter) }} - {{-->
+<!--                period.endDateTime.format(usDateFormatter)-->
+<!--            }}</p>-->
         <highcharts :options="chartOptions"/>
     </div>
 </template>
@@ -12,7 +12,7 @@ import Highcharts from "highcharts"
 
 const {chartOptions, period} = defineProps<{
     chartOptions: object,
-    period: PresetDetails | null,
+    period: Preset | null,
 }>()
 
 const highcharts = useNuxtApp().vueApp.component('highcharts')

@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md">
         <q-toolbar class="bg-primary shadow-2 rounded-borders" dense>
-            <OTimePresets label="Time Presets" show-custom-preset @update:period="p => period = p"/>
+            <OTimePresets label="Time Presets" show-custom-preset @update:preset="p => selectedPeriod = p"/>
             <q-space/>
             <!--            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense-->
             <!--                    indicator-color="transparent">-->
@@ -11,7 +11,12 @@
             <!--            </q-tabs>-->
             <q-space/>
 
-            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard"/>
+            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" @click="() => {
+                if(selectedPeriod !== null) {
+                    const endDateTime = nowUTC()
+                    const startDateTime = endDateTime.minusHours(24)
+                }
+            }"/>
             <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
             <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
             <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
@@ -25,7 +30,7 @@
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                  :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
-                <OMetric :chart-options="widget.chartOptions" :period="period"/>
+                <OMetric :chart-options="widget.chartOptions" :period="selectedPeriod"/>
             </div>
         </div>
         <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
@@ -47,10 +52,12 @@ let grid: GridStack;
 
 onMounted(() => {
     grid = GridStack.init(props.commonAppWideGridOptions);
-    if (period.value !== null) {
-        updateTimeRangeLabel.value = `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
-        watch(period, (nv, ov) => {
-            updateTimeRangeLabel.value = `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
+    if (selectedPeriod.value !== null) {
+        const period = selectedPeriod.value.period()
+        updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
+        watch(selectedPeriod, (nv, ov) => {
+            const period = nv.period()
+            updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
         })
     }
 });
@@ -60,7 +67,7 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const period = shallowRef(null)
+const selectedPeriod = shallowRef(null)
 
 const customRangeDialog = ref(false)
 </script>

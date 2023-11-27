@@ -1,13 +1,13 @@
 <template>
-    <ODateTimePicker :custom-range-dialog="customRangeDialog" @discard="customRangeDialog = false" @update:period="details => {
-        $emit('update:period', details)
+    <ODateTimePicker :custom-range-dialog="customRangeDialog" @discard="customRangeDialog = false" @update:preset="preset => {
+        $emit('update:preset', preset)
         customRangeDialog = false
     }"/>
     <q-select :model-value="selectedPreset.label" :options="availablePresets" dense filled :label="props.label"
               @update:model-value="nv => {
             selectedPreset = nv
             if (selectedPreset.value != 'ctp') {
-                $emit('update:period', nv.period())
+                $emit('update:preset', nv)
             } else {
                 customRangeDialog = true
             }
@@ -15,8 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import {ChronoUnit} from "@js-joda/core";
-
 interface Props {
     label?: string,
     showCustomPreset?: boolean,
@@ -28,52 +26,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-    (event: 'update:period', details: PresetDetails): void
+    (event: 'update:preset', details: Preset): void
 }>()
 
-const availablePresets = [
-    {
-        label: 'Last 24 hrs',
-        value: 'l24h',
-        period: (): PresetDetails => {
-            const endDateTime = nowUTC()
-            const startDateTime = endDateTime.minusHours(24)
-            return {
-                startDateTime,
-                endDateTime,
-                available: [Granularity.MINUTE, Granularity.HOUR]
-            }
-        }
-    },
-    {
-        label: 'Yesterday',
-        value: 'yest',
-        period: (): PresetDetails => {
-            const endDateTime = nowUTC().truncatedTo(ChronoUnit.DAYS)
-            const startDateTime = endDateTime.minusHours(24)
-            return {
-                startDateTime,
-                endDateTime,
-                available: [Granularity.MINUTE, Granularity.HOUR]
-            }
-        }
-    },
-    {
-        label: 'Last 7 days',
-        value: 'l7d',
-        period: (): PresetDetails => {
-            const endDateTime = nowUTC()
-            const startDateTime = endDateTime.minusHours(24)
-            return {
-                startDateTime,
-                endDateTime,
-                available: [Granularity.MINUTE, Granularity.HOUR]
-            }
-        }
-    }
-]
-
-const selectedPreset = ref(availablePresets[1])
+const selectedPreset = ref(availablePresets[0])
 
 const customRangeDialog = ref(false)
 
@@ -95,7 +51,7 @@ if (props.showCustomPreset) {
 }
 
 onMounted(() => {
-    emit('update:period', selectedPreset.value.period())
+    emit('update:preset', selectedPreset.value)
 })
 </script>
 

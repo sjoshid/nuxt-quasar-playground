@@ -68,7 +68,7 @@
 
             <q-card-actions align="right">
                 <q-btn v-close-popup color="primary" flat label="Close" @click="$emit('discard')"/>
-                <q-btn v-close-popup color="primary" label="Apply" @click="calculatePeriod"/>
+                <q-btn v-close-popup color="primary" label="Apply" @click="calculatePreset"/>
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -76,7 +76,6 @@
 
 <script lang="ts" setup>
 import {LocalDateTime, ZonedDateTime, ZoneId} from "@js-joda/core";
-import {PresetDetails} from "~/composables/oMetricsWidget";
 
 interface Props {
     leftRight?: boolean,
@@ -91,20 +90,26 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
     (event: 'discard'): void,
-    (event: 'update:period', details: PresetDetails): void
+    (event: 'update:preset', preset: Preset): void
 }>()
 
 const endDateTime = ref(nowUTC())
 const startDateTime = ref(endDateTime.value.minusHours(1))
 
-const calculatePeriod = () => {
+const calculatePreset = () => {
     // sj_todo do some date validation before emitting. eg., end date cannot be before start date, etc.
-    const p: PresetDetails = {
-        startDateTime: startDateTime.value,
-        endDateTime: endDateTime.value,
-        available: []
+    const preset: Preset = {
+        label: '',
+        value: '',
+        period: (): PresetDetails => {
+            return {
+                startDateTime: startDateTime.value,
+                endDateTime: endDateTime.value,
+                available: []
+            }
+        }
     }
-    emit('update:period', p)
+    emit('update:preset', preset)
 }
 
 </script>
