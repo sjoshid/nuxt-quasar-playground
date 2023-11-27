@@ -35,18 +35,24 @@
 <script lang="ts" setup>
 import {matPictureAsPdf, matRefresh, matSchedule, matTableChart} from '@quasar/extras/material-icons'
 import {GridStack, GridStackOptions} from 'gridstack';
-import {PresetDetails} from "~/composables/oMetricsWidget";
 
 const props = defineProps<{
     gridName?: string,
     commonAppWideGridOptions: GridStackOptions,
 }>()
 const emits = defineEmits(['update:gridName'])
+const updateTimeRangeLabel = ref('')
 
 let grid: GridStack;
 
 onMounted(() => {
     grid = GridStack.init(props.commonAppWideGridOptions);
+    if (period.value !== null) {
+        updateTimeRangeLabel.value = `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
+        watch(period, (nv, ov) => {
+            updateTimeRangeLabel.value = `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
+        })
+    }
 });
 
 const saveGrid = () => {
@@ -54,15 +60,7 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const updateTimeRangeLabel = computed(() => {
-    return `${period.value.startDateTime.format(usDateFormatter)} - ${period.value.endDateTime.format(usDateFormatter)}. Available grans ${period.value.available}`
-})
-
-const period = shallowRef<PresetDetails>({
-    startDateTime: nowUTC(),
-    endDateTime: nowUTC(),
-    available: []
-})
+const period = shallowRef(null)
 
 const customRangeDialog = ref(false)
 </script>

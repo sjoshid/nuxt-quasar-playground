@@ -11,11 +11,7 @@ export const metricWidgets: OMetricsWidget[] = [{
         title: {
             text: 'Router Saturation 1'
         },
-        series: [
-            {
-                data: [10, 20, 30]
-            }
-        ]
+        series: []
     }
 }, {
     origin: [0, 3],
