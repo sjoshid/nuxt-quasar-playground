@@ -46,7 +46,3 @@ if (props.showCustomPreset) {
     )
 }
 </script>
-
-<style scoped>
-
-</style>

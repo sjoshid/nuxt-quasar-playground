@@ -99,8 +99,8 @@ const startDateTime = ref(endDateTime.value.minusHours(1))
 const calculatePreset = () => {
     // sj_todo do some date validation before emitting. eg., end date cannot be before start date, etc.
     const preset: Preset = {
-        label: '',
-        value: '',
+        label: 'Custom',
+        value: 'custom',
         period: (): PresetDetails => {
             return {
                 startDateTime: startDateTime.value,
