@@ -107,7 +107,8 @@ const calculatePreset = () => {
                 endDateTime: endDateTime.value,
                 available: []
             }
-        }
+        },
+        fluid: false
     }
     emit('update:preset', preset)
 }

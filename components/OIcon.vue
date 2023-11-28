@@ -14,7 +14,7 @@ export interface Props {
     matSvgIconName: string,
     iconSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
     tooltip?: string,
-    disabled: boolean
+    disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -58,3 +58,5 @@ export const availablePresets: Preset[] = [
         fluid: false,
     }
 ]
+
+export const selectedPreset = shallowRef(availablePresets[0])

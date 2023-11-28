@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md">
         <q-toolbar class="bg-primary shadow-2 rounded-borders" dense>
-            <OTimePresets label="Time Presets" show-custom-preset @update:preset="p => selectedPreset = p"/>
+            <OTimePresets label="Time Presets" show-custom-preset/>
             <q-space/>
             <!--            <q-tabs v-model="granularity" active-bg-color="secondary" class="shadow-2" dense-->
             <!--                    indicator-color="transparent">-->
@@ -10,11 +10,8 @@
             <!--                <q-tab label="Daily" name="daily"/>-->
             <q-space/>
 
-            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" :disabled="refreshDisabled" @click="() => {
-                if(selectedPreset !== null && selectedPreset.fluid) {
-                    console.log('Refreshing dashboard with preset', selectedPreset)
-                }
-            }"/>
+            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" :disabled="refreshDisabled" @click="() =>
+                console.log('Refreshing dashboard with preset', selectedPreset)"/>
             <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
             <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
             <OIcon :mat-svg-icon-name="matTableChart" tooltip="Show tabular data"/>
@@ -28,7 +25,7 @@
         <div :class="{ 'grid-stack': true, 'y-grid-stack': true }">
             <div v-for="( widget, index ) in  metricWidgets " :key="index" :gs-h="widget.dims[1]" :gs-w="widget.dims[0]"
                  :gs-x="widget.origin[0]" :gs-y="widget.origin[1]" class="grid-stack-item">
-                <OMetric :chart-options="widget.chartOptions" :period="selectedPreset"/>
+                <OMetric :chart-options="widget.chartOptions"/>
             </div>
         </div>
         <q-btn color="primary" label="Save Grid Layout" @click="saveGrid"/>
@@ -46,31 +43,26 @@ const props = defineProps<{
 const emits = defineEmits(['update:gridName'])
 const updateTimeRangeLabel = ref('')
 
-let grid: GridStack;
-
-onMounted(() => {
-    grid = GridStack.init(props.commonAppWideGridOptions);
-    if (selectedPreset.value !== null) {
-        const period = selectedPreset.value.period()
-        updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
-        watch(selectedPreset, (nv, ov) => {
-            const period = nv.period()
-            updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
-            refreshDisabled.value = !nv.fluid
-            console.log('Refresh enabled?', !refreshDisabled.value)
-        })
-    }
-});
-
 const saveGrid = () => {
     const widgets = grid.save(false)
     console.log(widgets)
 }
 
-const selectedPreset = shallowRef(null)
-
-const customRangeDialog = ref(false)
 const refreshDisabled = ref(false)
+
+let grid: GridStack;
+
+onMounted(() => {
+    grid = GridStack.init(props.commonAppWideGridOptions);
+    const period = selectedPreset.value.period()
+    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
+});
+
+watch(selectedPreset, (nv, ov) => {
+    const period = nv.period()
+    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
+    refreshDisabled.value = !nv.fluid
+})
 </script>
 
 <!--PS: Try making this a scoped style. You'll notice that resize handles disappear.-->
