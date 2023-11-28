@@ -26,16 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
     showCustomPreset: false,
 })
 
-// const emit = defineEmits<{
-//     (event: 'update:preset', details: Preset): void
-// }>()
-
 const customRangeDialog = ref(false)
-
-
-// onMounted(() => {
-//     emit('update:preset', selectedPreset.value)
-// })
 </script>
 
 <style scoped>
