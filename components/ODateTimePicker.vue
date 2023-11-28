@@ -110,7 +110,7 @@ const calculatePreset = () => {
         },
         fluid: false
     }
-    emit('update:preset', preset)
+    selectedPreset.value = preset
 }
 
 </script>

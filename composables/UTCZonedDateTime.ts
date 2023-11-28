@@ -11,7 +11,9 @@ export interface Preset {
     label: string,
     value: string,
     period: () => PresetDetails,
-    fluid: boolean, // should be true if now is constantly changing. Like last hr, last 24 hrs etc.
+    /** Should be <code>true</code> if <i>now</i> is constantly changing. Like last hr, last 24 hrs etc. <br>
+     * Should be <code>false</code> for yesterday, last week, etc. */
+    fluid: boolean,
 }
 
 export const availablePresets: Preset[] = [

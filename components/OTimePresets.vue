@@ -5,7 +5,7 @@
     }"/>
     <q-select :model-value="selectedPreset.label" :options="availablePresets" dense filled :label="props.label"
               @update:model-value="nv => {
-            if (selectedPreset.value != 'ctp') {
+            if (nv.value !== 'custom') {
                 selectedPreset = nv
             } else {
                 customRangeDialog = true
@@ -27,6 +27,24 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const customRangeDialog = ref(false)
+
+if (props.showCustomPreset) {
+    availablePresets.push(
+        {
+            label: 'Custom',
+            value: 'custom',
+            period: (): PresetDetails => {
+                // This preset is invalid
+                return {
+                    startDateTime: nowUTC(),
+                    endDateTime: nowUTC(),
+                    available: []
+                }
+            },
+            fluid: false
+        }
+    )
+}
 </script>
 
 <style scoped>
