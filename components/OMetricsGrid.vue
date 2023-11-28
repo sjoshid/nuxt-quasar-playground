@@ -10,7 +10,7 @@
             <!--                <q-tab label="Daily" name="daily"/>-->
             <q-space/>
 
-            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" :disabled="refreshDisabled" @click="() =>
+            <OIcon :mat-svg-icon-name="matRefresh" tooltip="Refresh Dashboard" :disabled="!selectedPreset.fluid" @click="() =>
                 console.log('Refreshing dashboard with preset', selectedPreset)"/>
             <OIcon :mat-svg-icon-name="matSchedule" tooltip="Schedule Metrics Export"/>
             <OIcon :mat-svg-icon-name="matPictureAsPdf" tooltip="Download PDF"/>
@@ -48,8 +48,6 @@ const saveGrid = () => {
     console.log(widgets)
 }
 
-const refreshDisabled = ref(false)
-
 let grid: GridStack;
 
 onMounted(() => {
@@ -61,7 +59,6 @@ onMounted(() => {
 watch(selectedPreset, (nv, ov) => {
     const period = nv.period()
     updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
-    refreshDisabled.value = !nv.fluid
 })
 </script>
 
