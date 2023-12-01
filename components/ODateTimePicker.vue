@@ -7,12 +7,13 @@
 
             <q-card-section class="q-pt-none">
                 <div :class="{ 'col': !leftRight, 'row': leftRight }" class="justify-between q-gutter-y-md">
-                    <q-input :model-value="startDateTime.format(usDateFormatter)" dense filled label="From" stack-label>
+                    <q-input readonly :model-value="startDateTime.format(usDateFormatter)" dense filled label="From" stack-label>
                         <template v-slot:prepend>
                             <q-icon class="cursor-pointer" name="event">
                                 <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                                     <q-date :model-value="startDateTime?.format(usDateFormatter)" :mask="quasarFormat"
-                                            @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
+                                            @update:model-value="nv => startDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)"
+                                            :options="startDateLimit">
                                         <div class="row items-center justify-end">
                                             <q-btn v-close-popup color="primary" flat label="Close"/>
                                         </div>
@@ -35,12 +36,13 @@
                             </q-icon>
                         </template>
                     </q-input>
-                    <q-input :model-value="endDateTime.format(usDateFormatter)" dense filled label="To" stack-label>
+                    <q-input readonly :disable="endDateTimeDisabled" :model-value="endDateTime.format(usDateFormatter)" dense filled label="To" stack-label>
                         <template v-slot:prepend>
                             <q-icon class="cursor-pointer" name="event">
                                 <q-popup-proxy cover transition-hide="scale" transition-show="scale">
                                     <q-date :model-value="endDateTime.format(usDateFormatter)" :mask="quasarFormat"
-                                            @update:model-value="nv => endDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)">
+                                            @update:model-value="nv => endDateTime = ZonedDateTime.of(LocalDateTime.parse(nv, usDateFormatter), ZoneId.UTC)"
+                                            :options="endDateLimit">
                                         <div class="row items-center justify-end">
                                             <q-btn v-close-popup color="primary" flat label="Close"/>
                                         </div>
@@ -95,7 +97,7 @@ const emit = defineEmits<{
 
 const endDateTime = ref(nowUTC())
 const startDateTime = ref(endDateTime.value.minusHours(1))
-
+const endDateTimeDisabled = ref(true)
 const calculatePreset = () => {
     // sj_todo do some date validation before emitting. eg., end date cannot be before start date, etc.
     const preset: Preset = {
@@ -113,4 +115,13 @@ const calculatePreset = () => {
     selectedPreset.value = preset
 }
 
+const startDateLimit = (date: String): boolean => {
+    // start should be a year in past
+    return date >= '2023/11/25' && date <= '2023/11/30'
+}
+
+const endDateLimit = (date: String): boolean => {
+    // end should be a function of start
+    return date <= '2023/11/30'
+}
 </script>
