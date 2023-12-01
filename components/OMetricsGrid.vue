@@ -53,12 +53,12 @@ let grid: GridStack;
 onMounted(() => {
     grid = GridStack.init(props.commonAppWideGridOptions);
     const period = selectedPreset.value.period()
-    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
+    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateTimeFormatter)} - ${period.endDateTime.format(usDateTimeFormatter)}. Available grans ${period.available}`
 });
 
 watch(selectedPreset, (nv, ov) => {
     const period = nv.period()
-    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateFormatter)} - ${period.endDateTime.format(usDateFormatter)}. Available grans ${period.available}`
+    updateTimeRangeLabel.value = `${period.startDateTime.format(usDateTimeFormatter)} - ${period.endDateTime.format(usDateTimeFormatter)}. Available grans ${period.available}`
 })
 </script>
 

@@ -2,10 +2,12 @@ import {ChronoUnit, DateTimeFormatter, ZonedDateTime, ZoneId, ZoneOffset} from "
 
 export const nowUTC = (): ZonedDateTime => ZonedDateTime.now(ZoneId.of('UTC'))
 
-export const usDateTimeMask = 'MM/dd/yyyy HH:mm:ss' // works
-export const usDateFormatter = DateTimeFormatter.ofPattern(usDateTimeMask)
+export const usDateTimeMask = 'MM/dd/yyyy HH:mm' // works
+export const usDateTimeFormatter = DateTimeFormatter.ofPattern(usDateTimeMask)
+export const usDateMask = 'MM/dd/yyyy'
+export const usDateFormatter = DateTimeFormatter.ofPattern(usDateMask)
 
-export const quasarFormat = 'MM/DD/YYYY HH:mm:ss'
+export const quasarFormat = 'MM/DD/YYYY HH:mm'
 
 export interface Preset {
     label: string,

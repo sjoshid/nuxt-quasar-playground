@@ -1,8 +1,8 @@
 <template>
     <div v-if="startDateTime !== undefined && endDateTime !== undefined"
          class="grid-stack-item-content c-grid-stack-item-content">
-        <p>Period is {{ startDateTime.format(usDateFormatter) }} - {{
-                endDateTime.format(usDateFormatter)
+        <p>Period is {{ startDateTime.format(usDateTimeFormatter) }} - {{
+                endDateTime.format(usDateTimeFormatter)
             }}</p>
         <highcharts :options="chartOptions"/>
     </div>
