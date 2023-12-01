@@ -125,6 +125,6 @@ const startDateLimit = (date: String): boolean => {
 
 const endDateLimit = (date: String): boolean => {
     const selectedDate = LocalDate.parse(date.toString(), DateTimeFormatter.ofPattern('yyyy/MM/dd'))
-    return !(selectedDate.isBefore(startDateTime.value.toLocalDate()) || selectedDate.isAfter(endDateTime.value.toLocalDate()))
+    return !(selectedDate.isBefore(startDateTime.value.toLocalDate()) || selectedDate.isAfter(readOnlyEndDateTime.toLocalDate()))
 }
 </script>
