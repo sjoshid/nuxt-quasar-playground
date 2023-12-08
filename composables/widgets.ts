@@ -1,5 +1,3 @@
-import {OMetricsWidget} from "~/composables/oMetricsWidget";
-
 export const metricWidgets: OMetricsWidget[] = [{
     origin: [0, 0],
     dims: [3, 3],

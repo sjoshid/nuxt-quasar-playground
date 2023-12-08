@@ -39,11 +39,27 @@
 </template>
 
 <script lang="ts" setup>
+import {Ref} from "@vue/reactivity";
+
 const themeStore = useThemeStore()
 const $q = useQuasar()
 
 $q.dark.set(themeStore.darkModeEnabled)
 
-const {data} = await useFetch('https://www.boredapi.com/api/activity')
-//const data = await $fetch('https://www.boredapi.com/api/activity')
+const {data, pending, error} = await useFetch<string>('https://www.boredapi.com/api/activity',
+    {
+        onRequest({request, options}) {
+            // Set the request headers
+        },
+        onRequestError({request, options, error}) {
+            // Handle the request errors
+        },
+        onResponse({request, response, options}) {
+            // Process the response data
+        },
+        onResponseError({request, response, options}) {
+            // Handle the response errors
+        },
+        query: {}
+    })
 </script>

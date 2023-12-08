@@ -4,8 +4,11 @@
         <p>Period is {{ startDateTime.format(usDateTimeFormatter) }} - {{
                 endDateTime.format(usDateTimeFormatter)
             }}</p>
+        <p>{{ dummyData }}</p>
         <highcharts :options="chartOptions"/>
     </div>
+
+    <div v-if="pending"></div>
 </template>
 
 <script lang="ts" setup>
@@ -17,19 +20,36 @@ const {chartOptions} = defineProps<{
 }>()
 
 const highcharts = useNuxtApp().vueApp.component('highcharts')
-const dummyData = ref('Dummy')
+const dummyData = ref('')
 
 let startDateTime: Ref<ZonedDateTime>;
 let endDateTime: Ref<ZonedDateTime>;
+let pending: Ref<boolean>;
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
     const period = selectedPreset.value.period()
     startDateTime = ref(period.startDateTime)
     endDateTime = ref(period.endDateTime)
 })
 
-onMounted(() => {
-    $fetch<string>('http://localhost:8080/dummy').then(r => dummyData.value = r).catch(e => console.error(e))
+onMounted(async () => {
+    dummyData.value = await $fetch<string>('http://localhost:8080/dummy',
+        {
+            onRequest({request, options}) {
+                // Set the request headers
+            },
+            onRequestError({request, options, error}) {
+                // Handle the request errors
+            },
+            onResponse({request, response, options}) {
+                // Process the response data
+            },
+            onResponseError({request, response, options}) {
+                // Handle the response errors
+                console.log("sujit", e)
+            },
+            query: {},
+        })
 })
 
 watch(selectedPreset, (nv, ov) => {
